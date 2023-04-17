@@ -48,28 +48,7 @@ export interface Reference<T> {
 }
 export declare type QueryFn<T = DocumentData> = (ref: CollectionReference<T>) => Query<T>;
 export declare type QueryGroupFn<T = DocumentData> = (query: Query<T>) => Query<T>;
-/**
- * A structure that provides an association between a reference
- * and a query on that reference. Note: Performing operations
- * on the reference can lead to confusing results with complicated
- * queries.
- *
- * Example:
- *
- * const query = ref.where('type', '==', 'Book').
- *                  .where('price', '>' 18.00)
- *                  .where('price', '<' 100.00)
- *                  .where('category', '==', 'Fiction')
- *                  .where('publisher', '==', 'BigPublisher')
- *
- * // This addition would not be a result of the query above
- * ref.add({
- *  type: 'Magazine',
- *  price: 4.99,
- *  category: 'Sports',
- *  publisher: 'SportsPublisher'
- * });
- */
+
 export interface AssociatedReference<T = DocumentData> {
     ref: CollectionReference<T>;
     query: Query<T>;
