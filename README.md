@@ -1,27 +1,76 @@
 # MicrosoftFormBuilder
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.0.4.
+#If you find any problem please update the file by copy paste
 
-## Development server
+#To update got : node_modules > @angular > fire > compat > firestore > interfaces.d.ts
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+import { Subscriber } from 'rxjs';
+import firebase from 'firebase/compat/app';
+export declare type Settings = firebase.firestore.Settings;
+export declare type CollectionReference<T = DocumentData> = firebase.firestore.CollectionReference<T>;
+export declare type DocumentReference<T = DocumentData> = firebase.firestore.DocumentReference<T>;
+export declare type PersistenceSettings = firebase.firestore.PersistenceSettings;
+export declare type DocumentChangeType = firebase.firestore.DocumentChangeType;
+export declare type SnapshotOptions = firebase.firestore.SnapshotOptions;
+export declare type FieldPath = firebase.firestore.FieldPath;
+export declare type Query<T = DocumentData> = firebase.firestore.Query<T>;
+export declare type SetOptions = firebase.firestore.SetOptions;
+export declare type DocumentData = firebase.firestore.DocumentData;
+export interface DocumentSnapshotExists<T> extends firebase.firestore.DocumentSnapshot<T> {
+    readonly exists: true;
+    data(options?: SnapshotOptions): T;
+}
+export interface DocumentSnapshotDoesNotExist extends firebase.firestore.DocumentSnapshot {
+    readonly exists: false;
+    data(options?: SnapshotOptions): undefined;
+    get(fieldPath: string | FieldPath, options?: SnapshotOptions): undefined;
+}
+export declare type DocumentSnapshot<T> = DocumentSnapshotExists<T> | DocumentSnapshotDoesNotExist;
+export interface QueryDocumentSnapshot<T> extends firebase.firestore.QueryDocumentSnapshot <T>{
+    data(options?: SnapshotOptions): T;
+}
+export interface QuerySnapshot<T> extends firebase.firestore.QuerySnapshot <T>{
+    readonly docs: QueryDocumentSnapshot<T>[];
+}
+export interface DocumentChange<T> extends firebase.firestore.DocumentChange <T>{
+    readonly doc: QueryDocumentSnapshot<T>;
+}
+export interface DocumentChangeAction<T> {
+    type: DocumentChangeType;
+    payload: DocumentChange<T>;
+}
+export interface Action<T> {
+    type: string;
+    payload: T;
+}
+export interface Reference<T> {
+    onSnapshot: (options: firebase.firestore.SnapshotListenOptions, sub: Subscriber<any>) => any;
+}
+export declare type QueryFn<T = DocumentData> = (ref: CollectionReference<T>) => Query<T>;
+export declare type QueryGroupFn<T = DocumentData> = (query: Query<T>) => Query<T>;
+/**
+ * A structure that provides an association between a reference
+ * and a query on that reference. Note: Performing operations
+ * on the reference can lead to confusing results with complicated
+ * queries.
+ *
+ * Example:
+ *
+ * const query = ref.where('type', '==', 'Book').
+ *                  .where('price', '>' 18.00)
+ *                  .where('price', '<' 100.00)
+ *                  .where('category', '==', 'Fiction')
+ *                  .where('publisher', '==', 'BigPublisher')
+ *
+ * // This addition would not be a result of the query above
+ * ref.add({
+ *  type: 'Magazine',
+ *  price: 4.99,
+ *  category: 'Sports',
+ *  publisher: 'SportsPublisher'
+ * });
+ */
+export interface AssociatedReference<T = DocumentData> {
+    ref: CollectionReference<T>;
+    query: Query<T>;
+}
