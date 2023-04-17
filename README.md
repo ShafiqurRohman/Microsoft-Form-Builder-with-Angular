@@ -2,7 +2,7 @@
 
 #If you find any problem please update the file by copy paste
 
-#To update got : node_modules > @angular > fire > compat > firestore > interfaces.d.ts
+#To update go to : node_modules > @angular > fire > compat > firestore > interfaces.d.ts
 
 import { Subscriber } from 'rxjs';
 import firebase from 'firebase/compat/app';
